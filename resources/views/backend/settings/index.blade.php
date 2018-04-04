@@ -14,7 +14,9 @@
                         </header><!-- .widget-header -->
                         <hr class="widget-separator">
                         <div class="widget-body">
-                            <form action="{{ route('backend.settings.seo') }}">
+                            <form action="#">
+                                @csrf
+                                
                                 <div class="form-group">
                                     <label for="keywords">Ключевые слова (keywords)</label>
                                     <input type="text" class="form-control" id="keywords" name="keywords">
@@ -41,43 +43,19 @@
                         </header><!-- .widget-header -->
                         <hr class="widget-separator">
                         <div class="widget-body">
-                            <div class="m-b-lg">
-                                <small>
-                                    Use Bootstrap's predefined grid classes to align labels and groups of form controls in a horizontal layout by adding <code>.form-horizontal</code> to the form (which doesn't have to be a <code>&lt;form&gt;</code>). Doing so changes <code>.form-groups</code> to behave as grid rows, so no need for <code>.row</code>.
-                                </small>
-                            </div>
                             <form class="form-horizontal">
+                                @csrf
+
                                 <div class="form-group">
-                                    <label for="exampleTextInput1" class="col-sm-3 control-label">Name:</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="exampleTextInput1" placeholder="Your name">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="email2" class="col-sm-3 control-label">Email:</label>
-                                    <div class="col-sm-9">
-                                        <input type="email" class="form-control" id="email2" placeholder="Eamil address">
-                                    </div>
+                                    <label for="exampleInputFile">Logo</label>
+                                    <input type="file" id="exampleInputFile" class="form-control">
                                 </div>
                                 <div class="form-group">
-                                    <label for="textarea1" class="col-sm-3 control-label">Comment:</label>
-                                    <div class="col-sm-9">
-                                        <textarea class="form-control" id="textarea1" placeholder="Your comment..."></textarea>
-                                    </div>
+                                    <label for="exampleInputFile">Favicon</label>
+                                    <input type="file" id="exampleInputFile" class="form-control">
                                 </div>
-                                <div class="form-group">
-                                    <div class="col-sm-9 col-sm-offset-3">
-                                        <div class="checkbox checkbox-success">
-                                            <input type="checkbox" id="checkbox-demo-2">
-                                            <label for="checkbox-demo-2">View my email</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-9 col-sm-offset-3">
-                                        <button type="submit" class="btn btn-success">Comment</button>
-                                    </div>
-                                </div>
+
+                                <button type="submit" class="btn btn-primary btn-md">Окей</button>
                             </form>
                         </div><!-- .widget-body -->
                     </div><!-- .widget -->
@@ -90,7 +68,7 @@
                         </header><!-- .widget-header -->
                         <hr class="widget-separator">
                         <div class="widget-body">
-                            <form action="{{ route('backend.settings.account') }}" method="POST" class="form-horizontal">
+                            <form action="#" method="POST" class="form-horizontal">
                                 @csrf
 
                                 <div class="form-group">    
