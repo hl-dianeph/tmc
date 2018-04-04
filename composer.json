@@ -11,6 +11,7 @@
         "infyomlabs/adminlte-templates": "5.6.x-dev",
         "infyomlabs/laravel-generator": "5.6.x-dev",
         "infyomlabs/swagger-generator": "dev-master",
+        "intervention/image": "^2.4",
         "jlapp/swaggervel": "dev-master",
         "kalnoy/nestedset": "^4.3",
         "laravel/framework": "5.6.*",

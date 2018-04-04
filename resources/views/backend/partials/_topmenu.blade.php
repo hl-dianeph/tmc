@@ -32,8 +32,8 @@
                     <li><a href="progress.html"><span class="menu-text">Progress</span></a></li>
                 </ul> -->
             </li>
-            <li class="{{ Request::is('backend/pages*') ? 'active' : '' }}">
-                <a href="javascript:void(0)">
+            <li class="{{ Request::is('backend/staticPages*') ? 'active' : '' }}">
+                <a href="{{ route('backend.staticPages.index') }}">
                     <i class="menu-icon zmdi zmdi-google-pages zmdi-hc-lg"></i>
                     <span class="menu-text">Страницы</span>
                     <!-- <i class="menu-caret zmdi zmdi-hc-sm zmdi-chevron-right"></i> -->
@@ -47,7 +47,7 @@
                 </a>
             </li>
             <li class="hidden-lg hidden-md hidden-sm {{ Request::is('backend/settings*') ? 'active' : '' }}">
-                <a href="javascript:void(0)">
+                <a href="{{ route('backend.settings.index')}}">
                     <i class="menu-icon zmdi zmdi-settings zmdi-hc-lg"></i>
                     <span class="menu-text">Настройки сайта</span>
                 </a>

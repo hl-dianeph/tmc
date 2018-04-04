@@ -1,8 +1,4 @@
 {
-    "/js/moment.js": "/js/moment.js",
-    "/js/fullcalendar.min.js": "/js/fullcalendar.min.js",
-    "/js/breakpoints.min.js": "/js/breakpoints.min.js",
-    "/css/app.css": "/css/app.css",
-    "/js/fullcalendar.js": "/js/fullcalendar.js",
-    "/css/libs.css": "/css/libs.css"
+    "/js/app.js": "/js/app.js",
+    "/css/app.css": "/css/app.css"
 }

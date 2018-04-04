@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\CreateCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use App\Models\Category;
 use App\Repositories\CategoryRepository;
 use Flash;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ class CategoryController extends AppBaseController
     /** @var  CategoryRepository */
     private $categoryRepository;
 
-    protected $perPage = 5;
+    protected $perPage = 3;
 
     public function __construct(CategoryRepository $categoryRepo)
     {
@@ -32,14 +33,12 @@ class CategoryController extends AppBaseController
     public function index(Request $request)
     {
         $this->categoryRepository->pushCriteria(new RequestCriteria($request));
-        // TODO: perPage 
-        $categories = $this->categoryRepository->paginate(
-            $this->perPage,
-            ['name', 'short_desc', 'full_desc', 'image']
-        );
+
+        $categories = $this->categoryRepository->getForIndex($this->perPage);
 
         return view('backend.categories.index')
-            ->with('categories', $categories);
+            ->with('categories', $categories)
+            ->with('page', $request->page);
     }
 
     /**
@@ -49,7 +48,8 @@ class CategoryController extends AppBaseController
      */
     public function create()
     {
-        return view('backend.categories.create');
+        return view('backend.categories.create')
+            ->with('page', 1);
     }
 
     /**
@@ -61,9 +61,10 @@ class CategoryController extends AppBaseController
      */
     public function store(CreateCategoryRequest $request)
     {
-        $input = $request->all();
+        $input = $request->validated();
+        // dd($input);
 
-        $category = $this->categoryRepository->create($input);
+        $category = $this->categoryRepository->storeNew($input);
 
         Flash::success('Category saved successfully.');
 
@@ -93,11 +94,12 @@ class CategoryController extends AppBaseController
     /**
      * Show the form for editing the specified Category.
      *
+     * @param  Illuminate\Http\Request $request
      * @param  int $id
      *
      * @return Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
         $category = $this->categoryRepository->findWithoutFail($id);
 
@@ -107,7 +109,9 @@ class CategoryController extends AppBaseController
             return redirect(route('backend.categories.index'));
         }
 
-        return view('backend.categories.edit')->with('category', $category);
+        return view('backend.categories.edit')
+            ->with('category', $category)
+            ->with('page', $request->page);
     }
 
     /**
@@ -128,11 +132,11 @@ class CategoryController extends AppBaseController
             return redirect(route('backend.categories.index'));
         }
 
-        $category = $this->categoryRepository->update($request->all(), $id);
+        $category = $this->categoryRepository->updateOld($request->validated(), $category);
 
         Flash::success('Category updated successfully.');
 
-        return redirect(route('backend.categories.index'));
+        return redirect(route('backend.categories.index', ['page' => $request->page]));
     }
 
     /**
@@ -152,7 +156,7 @@ class CategoryController extends AppBaseController
             return redirect(route('backend.categories.index'));
         }
 
-        $this->categoryRepository->delete($id);
+        $this->categoryRepository->destroy($category);
 
         Flash::success('Category deleted successfully.');
 

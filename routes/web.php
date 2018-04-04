@@ -29,10 +29,18 @@ Route::get('/logout', function(Request $request) {
 });
 Auth::routes();
 
-Route::prefix('backend')->as('backend.')->middleware(['role:administrator'])->group(function() {
+Route::prefix('backend')->as('backend.')->middleware(['auth', 'role:administrator'])->group(function() {
 	Route::get('/', 'BackendController@index')->name('index');
 
+	// settings
+	Route::get('/settings', 'SettingController@index')->name('settings.index');
+	Route::post('/settings/account', 'SettingController@updateAccount')->name('settings.account');
+	Route::post('/settings/seo', 'SettingController@updateSeo')->name('settings.seo');
+	Route::post('/settings/icons', 'SettingController@updateIcons')->name('settings.icons');
+
+	// resources
 	Route::resource('categories', 'CategoryController');
+	Route::resource('staticPages', 'StaticPageController');
 });
 
 // Route::get('backend/categories', ['as'=> 'backend.categories.index', 'uses' => 'CategoryController@index']);
@@ -43,3 +51,4 @@ Route::prefix('backend')->as('backend.')->middleware(['role:administrator'])->gr
 // Route::delete('backend/categories/{categories}', ['as'=> 'backend.categories.destroy', 'uses' => 'CategoryController@destroy']);
 // Route::get('backend/categories/{categories}', ['as'=> 'backend.categories.show', 'uses' => 'CategoryController@show']);
 // Route::get('backend/categories/{categories}/edit', ['as'=> 'backend.categories.edit', 'uses' => 'CategoryController@edit']);
+

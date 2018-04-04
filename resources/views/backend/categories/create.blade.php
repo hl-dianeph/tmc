@@ -1,24 +1,29 @@
 @extends('backend.layouts.master')
 
 @section('content')
-    <section class="content-header">
-        <h1>
-            Category
-        </h1>
-    </section>
-    <div class="content">
+<div class="row">
+    <div class="col-md-12">
         @include('adminlte-templates::common.errors')
-        <div class="box box-primary">
+        @include('flash::message')
 
-            <div class="box-body">
+        <div class="widget">
+            <header class="widget-header">
+                <h4 class="widget-title">Новая категория</h4>
+            </header><!-- .widget-header -->
+            <hr class="widget-separator">
+            
+            <div class="widget-body text-center">
                 <div class="row">
-                    {!! Form::open(['route' => 'backend.categories.store']) !!}
+                    {!! Form::open(['route' => 'backend.categories.store', 'files' => true]) !!}
 
                         @include('backend.categories.fields')
 
                     {!! Form::close() !!}
                 </div>
-            </div>
+            </div><!-- .widget-body -->
         </div>
+
     </div>
+</div>
+
 @endsection

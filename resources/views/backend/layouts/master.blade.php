@@ -60,7 +60,7 @@
                         </a>
                     </li>
                     <li class="nav-item dropdown hidden-float">
-                        <a href="javascript:void(0)" aria-expanded="false">
+                        <a href="{{ route('backend.settings.index') }}" aria-expanded="false">
                             <i class="zmdi zmdi-hc-lg zmdi-settings"></i>
                         </a>
                     </li>
@@ -69,7 +69,7 @@
                             <i class="zmdi zmdi-hc-lg zmdi-power"></i>
                         </a>
                         <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
-                            {{ csrf_field() }}
+                            @csrf
                         </form>
                     </li>
                 </ul>
@@ -149,7 +149,7 @@
         <div class="navbar-search-inner">
             <form action="#">
                 <span class="search-icon"><i class="fa fa-search"></i></span>
-                <input class="search-field" type="search" placeholder="поиск..." />
+                <input class="search-field" type="search" placeholder="Поиск..." />
             </form>
             <button type="button" class="search-close" data-toggle="collapse" data-target="#navbar-search" aria-expanded="false">
                 <i class="fa fa-close"></i>
@@ -178,6 +178,23 @@
     <script src="{{ asset('js/moment.js') }}"></script>
     <script src="{{ asset('js/fullcalendar.min.js') }}"></script>
     <script src="{{ asset('js/fullcalendar.js') }}"></script>
+
+    <script src="{{ asset('js/tinymce/tinymce.min.js') }}"></script>
+
+    @yield('scripts_import')
+
+    <script>
+        $(document).ready(function() {
+            tinymce.init({
+                selector: 'textarea.tinymce-text', 
+                // editor_selector: "tinymce-text",
+                // editor_deselector: "no-tinymce",
+                auto_focus: 'element1'
+            });
+
+            @yield('scripts_body')
+        });
+    </script>
 </body>
 
 </html>

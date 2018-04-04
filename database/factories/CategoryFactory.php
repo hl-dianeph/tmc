@@ -14,8 +14,13 @@ use Faker\Generator as Faker;
 */
 
 $factory->define(App\Models\Category::class, function (Faker $faker) {
+    $title = $faker->unique()->lastname;
+    $name = '@' . $title;
+    $slug = mb_strtolower($title);
+
     return [
-        'name' => $faker->unique()->name,
+        'name' => $name,
+        'slug' => $slug,
         'short_desc' => $faker->sentence,
         'full_desc' => $faker->paragraph,
         'image' => $faker->imageUrl(512, 512),

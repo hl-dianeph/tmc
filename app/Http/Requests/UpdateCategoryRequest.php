@@ -25,6 +25,34 @@ class UpdateCategoryRequest extends FormRequest
      */
     public function rules()
     {
-        return Category::$rules;
+        // get current category id
+        $id = $this->category;
+
+        return  [
+            'name' => 'required|unique:categories,name,' . $id . '|between:2,255',
+            'short_desc' => 'required',
+            'full_desc' => 'required',
+            'image' => 'sometimes|file|mimes:jpeg,jpg,png|max:1024',
+            'keywords' => 'sometimes',
+            'og_description' => 'sometimes'
+        ];
+    }
+
+    /**
+     * Configure the validator instance.
+     *
+     * @param  \Illuminate\Validation\Validator  $validator
+     * @return void
+     */
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $data = $validator->getData();
+
+            // slug
+            if (!isset($data['name'])) {
+                $validator->errors()->add('slug', 'Slug is required with name present');
+            }
+        });
     }
 }

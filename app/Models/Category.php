@@ -21,6 +21,7 @@ class Category extends Model
 {
     use SoftDeletes;
 
+
     public $table = 'categories';
     
 
@@ -29,6 +30,7 @@ class Category extends Model
 
     public $fillable = [
         'name',
+        'slug',
         'short_desc',
         'full_desc',
         'image',
@@ -43,22 +45,30 @@ class Category extends Model
      */
     protected $casts = [
         'name' => 'string',
+        'slug' => 'string',
         'full_desc' => 'string',
         'image' => 'string',
         'keywords' => 'string',
         'og_description' => 'string'
     ];
 
-    /**
-     * Validation rules
-     *
-     * @var array
-     */
-    public static $rules = [
-        'name' => 'required|unique:categories|between:2,255',
-        'short_desc' => 'required',
-        'full_desc' => 'required'
-    ];
-
     
+    /**
+     * Constants
+     *
+     */
+
+    public const DEFAULT_IMAGE = 'default.png';
+    public const IMAGE_PUBLIC_DIR = 'images/categories/';
+
+
+    /**
+     * Dropdown for select
+     * 
+     */
+    public static function dropdown() {
+        return [
+            null => 'Верхний уровень'
+        ];
+    }
 }
