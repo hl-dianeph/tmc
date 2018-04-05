@@ -14,16 +14,16 @@
                         </header><!-- .widget-header -->
                         <hr class="widget-separator">
                         <div class="widget-body">
-                            <form action="#">
+                            <form action="{{ route('backend.settings.seo') }}" method="POST">
                                 @csrf
-                                
+
                                 <div class="form-group">
                                     <label for="keywords">Ключевые слова (keywords)</label>
-                                    <input type="text" class="form-control" id="keywords" name="keywords">
+                                    <input type="text" class="form-control" id="keywords" name="keywords" value="{{ $settings['keywords']->value }}">
                                 </div>
                                 <div class="form-group">
                                     <label for="og_description">Описание (og:description)</label>
-                                    <textarea class="form-control no-tinymce" id="og_description" name="og_description"></textarea>
+                                    <textarea class="form-control no-tinymce" id="og_description" name="og_description">{{ $settings['og_description']->value }}</textarea>
                                 </div>
                                 <!-- <div class="form-group">
                                     <label for="exampleInputFile">File input</label>
@@ -43,16 +43,26 @@
                         </header><!-- .widget-header -->
                         <hr class="widget-separator">
                         <div class="widget-body">
-                            <form class="form-horizontal">
+                            <form action="{{ route('backend.settings.icons') }}" enctype="multipart/form-data">
                                 @csrf
 
-                                <div class="form-group">
-                                    <label for="exampleInputFile">Logo</label>
-                                    <input type="file" id="exampleInputFile" class="form-control">
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-6" style="text-align: center;">
+                                        <div class="avatar avatar-xl">
+                                            <img src="{{ asset($settings['logo']->value) }}" alt="logo">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-9 col-sm-6">
+                                        <div class="form-group">
+                                            <label for="logo">Логотип сайта</label>
+                                            <input type="file" id="logo" name="logo" class="form-control">
+                                        </div>
+                                    </div>
                                 </div>
+
                                 <div class="form-group">
-                                    <label for="exampleInputFile">Favicon</label>
-                                    <input type="file" id="exampleInputFile" class="form-control">
+                                    <label for="favicon">Favicon</label>
+                                    <input type="file" id="favicon" name="favicon" class="form-control">
                                 </div>
 
                                 <button type="submit" class="btn btn-primary btn-md">Окей</button>

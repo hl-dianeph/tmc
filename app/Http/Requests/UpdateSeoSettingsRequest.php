@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Setting;
 
-class UpdateSettingRequest extends FormRequest
+class UpdateSeoSettingsRequest extends FormRequest
 {
 
     /**
@@ -25,6 +25,9 @@ class UpdateSettingRequest extends FormRequest
      */
     public function rules()
     {
-        return Setting::$rules;
+        return [
+            'keywords' => 'sometimes',
+            'og_description' => 'sometimes'
+        ];
     }
 }

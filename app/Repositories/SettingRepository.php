@@ -45,4 +45,29 @@ class SettingRepository extends BaseRepository
 
         return $settings;
     }
+
+    // update seo
+    public function updateSeo($settings) {
+        $wasUpdated = false;
+
+        // keywords
+        if (isset($settings['keywords'])) {
+            $keywords = Setting::where('name', 'keywords')->first();
+            $keywords->value = $settings['keywords'];
+            $keywords->save();
+
+            $wasUpdated = true;
+        }
+
+        // og_description
+        if (isset($settings['og_description'])) {
+            $ogDescription = Setting::where('name', 'og_description')->first();
+            $ogDescription->value = $settings['og_description'];
+            $ogDescription->save();
+
+            $wasUpdated = true;
+        }
+
+        return $wasUpdated;
+    }
 }

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateSettingRequest;
-use App\Repositories\SettingRepository;
 use App\Http\Controllers\AppBaseController;
-use Illuminate\Http\Request;
+use App\Http\Requests\UpdateSeoSettingsRequest;
+use App\Repositories\SettingRepository;
 use Flash;
+use Illuminate\Http\Request;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 
@@ -30,6 +30,25 @@ class SettingController extends AppBaseController
         return view('backend.settings.index', compact('settings'));
     }
 
+    /**
+     * Update the seo settings (keywords, description) in storage.
+     *
+     * @param  int              $id
+     * @param UpdateSeoSettingRequest $request
+     *
+     * @return Response
+     */
+    public function updateSeo(UpdateSeoSettingsRequest $request)
+    {
+        $wasUpdated = $this->settingRepository->updateSeo($request->validated());
+
+        if (!empty($wasUpdated)) {
+            Flash::success('SEO settings updated successfully.');
+        }
+
+        return redirect(route('backend.settings.index'));
+    }
+
 
     /**
      * Update the specified SiteConfig in storage.
@@ -49,7 +68,7 @@ class SettingController extends AppBaseController
             return redirect(route('backend.settings.index'));
         }
 
-        $setting = $this->settingRepository->updateOld($request->validated(), $setting);
+        $this->settingRepository->updateOld($request->validated(), $setting);
 
         Flash::success('Setting updated successfully.');
 
