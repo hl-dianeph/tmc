@@ -1,26 +1,68 @@
-@extends('frontend.layouts.static') 
+@extends('frontend.layouts.master') 
 
-@section('page_content')
-<div class="dev_page_bread_crumbs"></div>
-  <h1 id="dev_page_title" dir="auto">Добавить канал в каталог</h1>
-  
-  <div id="dev_page_content" dir="auto"><p>Каталог телеграм каналов - автонаполняем ха ха бла бла хаха бла бла</p>
-<hr>
-<h4><a class="anchor" name="bot-api" href="https://core.telegram.org/api#bot-api"><i class="anchor-icon"></i></a>Название телеграм канала</h4>
-      <div class="form-group">
-            <input type="tel" class="form-control tr-form-control input-lg" id="login-phone" placeholder="Вставьте сюда имя телеграм канала: @name" autocomplete="off">
-          </div>
+@section('content')
+<div id="app">
+<form>
+    <div v-if="step === 1">
+        <h1>Шаг 1. Авторизация</h1>
+        <a href="{{ route('auth.telegram') }}">Войти через Телеграм</a>
+        <button class="hidden" @click.prevent="next()">Next</button>
+    </div>
+    
+    <div v-if="step === 2">
+        <h1>Шаг 2</h1>
+        <p>
+            <legend for="name">Название телеграм канала</legend>
+            <input id="name" name="name" v-model="registration.name">
+        </p>
+        <button @click.prevent="next()">Next</button>
+    </div>
 
-          <div class="form-group">
-            <input class="btn btn-primary" type="submit" name="" value="Продолжить">
-        </div>
+    <div v-if="step === 3">
+        <h1>Шаг 3. </h1>
+        <p>
+            <legend for="street">Your Street:</legend>
+            <input id="street" name="street" v-model="registration.street">
+        </p>
+        <p>
+            <legend for="city">Your City:</legend>
+            <input id="city" name="city" v-model="registration.city">
+        </p>
+        <p>
+            <legend for="state">Your State:</legend>
+            <input id="state" name="state" v-model="registration.state">
+        </p>
+        <button @click.prevent="prev()">Previous</button>
+        <button @click.prevent="next()">Next</button>
+    </div>
 
-     <!-- <h4> Описание телеграм канала</h4>
-          <div class="form-group">
-            <textarea class="form-control tr-form-control input-lg" id="login-phone" maxlength="254" size="404"  placeholder="Подробное описание вашего телеграм канала" autocomplete="off" rows="6"></textarea>
-          </div> -->
+    <div v-if="step === 4">
+        <h1>Step Three</h1>
+        <p>
+            <legend for="numtickets">Number of Tickets:</legend>
+            <input id="numtickets" name="numtickets" type="number" v-model="registration.numtickets">
+        </p>
+        <p>
+            <legend for="shirtsize">Shirt Size:</legend>
+            <select id="shirtsize" name="shirtsize" v-model="registration.shirtsize">
+                <option value="S">Small</option>
+                <option value="M">Medium</option>
+                <option value="L">Large</option>
+                <option value="XL">X-Large</option>
+            </select>
+        </p>
+        <button @click.prevent="prev()">Previous</button>
+        <button @click.prevent="submit()">Save</button>
+    </div>
+</form>
+<br/>
+<br/>Debug: @{{registration}}
+</div>
+@endsection
 
-    <!-- <blockquote>
-    <p><a href="https://core.telegram.org/bots"><strong>Читать подробнее</strong></a> / 100 подписчиков / 15 комментериев</p>
-    </blockquote> -->
+
+
+@section('scripts_import')
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="{{ asset('js/multistepform.js') }}"></script>
 @endsection

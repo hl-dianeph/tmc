@@ -15,9 +15,11 @@
         "jlapp/swaggervel": "dev-master",
         "kalnoy/nestedset": "^4.3",
         "laravel/framework": "5.6.*",
+        "laravel/socialite": "^3.0",
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "^5.6.0",
-        "spatie/laravel-permission": "^2.9"
+        "spatie/laravel-permission": "^2.9",
+        "telegram/passport-laravel": "^2.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.1",

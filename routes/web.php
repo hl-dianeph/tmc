@@ -25,6 +25,12 @@ Route::get('/channels/{name}', 'FrontendController@showChannel')->name('channels
 
 Route::get('/handleauth', 'Auth\LoginController@handleAuth');
 
+// Telegram
+Route::get('/telegram', 'TelegramController@test');
+
+Route::get('auth/telegram', 'Auth\LoginController@redirectToProvider')->name('auth.telegram');
+Route::get('auth/telegram/callback', 'Auth\LoginController@handleProviderCallback');
+
 // TODO: remove this in production
 Route::get('/logout', function(Request $request) {
 	Auth::logout();
