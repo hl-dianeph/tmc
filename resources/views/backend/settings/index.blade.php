@@ -3,6 +3,7 @@
 @section('content')
 <div class="row">
     <div class="col-md-12">
+        @include('adminlte-templates::common.errors')
         @include('flash::message')
 
         <section class="app-content">
@@ -43,7 +44,7 @@
                         </header><!-- .widget-header -->
                         <hr class="widget-separator">
                         <div class="widget-body">
-                            <form action="{{ route('backend.settings.icons') }}" enctype="multipart/form-data">
+                            <form action="{{ route('backend.settings.icons') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
 
                                 <div class="row">
@@ -60,9 +61,18 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="favicon">Favicon</label>
-                                    <input type="file" id="favicon" name="favicon" class="form-control">
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-6" style="text-align: center;">
+                                        <div class="avatar avatar-xl">
+                                            <img src="{{ asset($settings['favicon']->value) }}" alt="logo">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-9 col-sm-6">
+                                        <div class="form-group">
+                                            <label for="favicon">Favicon</label>
+                                            <input type="file" id="favicon" name="favicon" class="form-control">
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <button type="submit" class="btn btn-primary btn-md">Окей</button>
@@ -78,13 +88,13 @@
                         </header><!-- .widget-header -->
                         <hr class="widget-separator">
                         <div class="widget-body">
-                            <form action="#" method="POST" class="form-horizontal">
+                            <form action="{{ route('backend.settings.account') }}" method="POST" class="form-horizontal">
                                 @csrf
 
                                 <div class="form-group">    
                                     <label for="email" class="col-sm-2 col-sm-offset-2 control-label">Почта</label>
                                     <div class="col-sm-5">
-                                        <input class="form-control" name="email" type="email" placeholder="Email" required="required">
+                                        <input class="form-control" name="email" type="email" placeholder="Email" required="required" value="{{ $admin->email }}">
                                     </div>
                                 </div><!-- .form-group -->
 
@@ -96,16 +106,16 @@
                                 </div><!-- .form-group -->
 
                                 <div class="form-group">    
-                                    <label for="password" class="col-sm-2 col-sm-offset-2 control-label">Новый пароль</label>
+                                    <label for="new_password" class="col-sm-2 col-sm-offset-2 control-label">Новый пароль</label>
                                     <div class="col-sm-5">
-                                        <input class="form-control" name="password" type="password" placeholder="Новый пароль" required="required">
+                                        <input class="form-control" name="new_password" type="password" placeholder="Новый пароль" required="required">
                                     </div>
                                 </div><!-- .form-group -->
 
                                 <div class="form-group">    
-                                    <label for="password_confirm" class="col-sm-2 col-sm-offset-2 control-label">Подтвердите пароль</label>
+                                    <label for="new_password_confirmation" class="col-sm-2 col-sm-offset-2 control-label">Подтвердите пароль</label>
                                     <div class="col-sm-5">
-                                        <input class="form-control" name="password_confirm" type="password" placeholder="Подтвердите пароль" required="required">
+                                        <input class="form-control" name="new_password_confirmation" type="password" placeholder="Подтвердите пароль" required="required">
                                     </div>
                                 </div><!-- .form-group -->
 

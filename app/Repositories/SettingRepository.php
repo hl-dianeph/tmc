@@ -3,7 +3,10 @@
 namespace App\Repositories;
 
 use App\Models\Setting;
+use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use InfyOm\Generator\Common\BaseRepository;
 
 /**
@@ -48,26 +51,104 @@ class SettingRepository extends BaseRepository
 
     // update seo
     public function updateSeo($settings) {
-        $wasUpdated = false;
+        $result = ['wasUpdated' => false, 'error' => null];
 
         // keywords
         if (isset($settings['keywords'])) {
-            $keywords = Setting::where('name', 'keywords')->first();
-            $keywords->value = $settings['keywords'];
-            $keywords->save();
+            try {
+                $keywords = Setting::where('name', 'keywords')->first();
+                $keywords->value = $settings['keywords'];
+                $keywords->save();
 
-            $wasUpdated = true;
+                $result['wasUpdated'] = true;
+            } catch (\Exception $e) {
+                $result['wasUpdated'] = false;
+                $result['error'] = $e->getMessage();
+            }
         }
 
         // og_description
         if (isset($settings['og_description'])) {
-            $ogDescription = Setting::where('name', 'og_description')->first();
-            $ogDescription->value = $settings['og_description'];
-            $ogDescription->save();
+            try {
+                $ogDescription = Setting::where('name', 'og_description')->first();
+                $ogDescription->value = $settings['og_description'];
+                $ogDescription->save();
 
-            $wasUpdated = true;
+                $result['wasUpdated'] = true;
+            } catch (\Exception $e) {
+                $result['wasUpdated'] = false;
+                $result['error'] = $e->getMessage();
+            }
         }
 
-        return $wasUpdated;
+        return $result;
+    }
+
+    // update icons
+    public function updateIcons($settings) {
+        $result = ['wasUpdated' => false, 'error' => null];
+
+        // logo
+        if (isset($settings['logo'])) {
+            try {
+                // remove old
+                unlink(public_path(Setting::IMAGE_PUBLIC_DIR . Setting::LOGO_NAME));
+
+                // upload new
+                $settings['logo']->move(public_path(Setting::IMAGE_PUBLIC_DIR), Setting::LOGO_NAME);
+
+                $logo = Setting::where('name', 'logo')->first();
+                $logo->value = Setting::IMAGE_PUBLIC_DIR . Setting::LOGO_NAME;
+                $logo->save();
+
+                $result['wasUpdated'] = true;
+            } catch (\Exception $e) {
+                $result['wasUpdated'] = false;
+                $result['error'] = $e->getMessage();
+            }
+        }
+
+        // favicon
+        if (isset($settings['favicon'])) {
+            try {
+                // remove old
+                unlink(public_path(Setting::FAVICON_NAME));
+
+                // upload new
+                $settings['favicon']->move(public_path(), Setting::FAVICON_NAME);
+
+                $favicon = Setting::where('name', 'favicon')->first();
+                $favicon->value = Setting::FAVICON_NAME;
+                $favicon->save();
+
+                $result['wasUpdated'] = true;
+            } catch (\Exception $e) {
+                $result['wasUpdated'] = false;
+                $result['error'] = $e->getMessage();
+            }
+        }
+
+        return $result;
+    }
+
+    // update account
+    public function updateAccount($settings) {
+        $result = ['wasUpdated' => false, 'error' => null];
+
+        $userId = Auth::user()->id;                       
+        
+        try {
+            $userObj = User::find($userId);
+            $userObj->email = $settings['email'];
+            $userObj->password = Hash::make($settings['new_password']);;
+            $userObj->save(); 
+
+            $result['wasUpdated'] = true;
+        } catch (\Exception $e) {
+            $result['wasUpdated'] = false;
+                $result['error'] = $e->getMessage();
+        }
+        
+        return $result;
     }
 }

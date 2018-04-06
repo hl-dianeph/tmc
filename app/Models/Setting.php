@@ -53,4 +53,8 @@ class Setting extends Model
     ];
 
     
+    // const
+    public const LOGO_NAME = "logo.png";
+    public const FAVICON_NAME = "favicon.ico";
+    public const IMAGE_PUBLIC_DIR = "images/";
 }

@@ -14,10 +14,14 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/', function () {
+Route::get('/', 'FrontendController@index')->name('home');
+Route::get('/static/{slug}', 'FrontendController@showStaticPage')->name('static');
 
-});
+Route::get('/categories', 'FrontendController@showCategories')->name('categories.index');
+Route::get('/categories/{slug}', 'FrontendController@showCategory')->name('categories.show');
 
+Route::get('/channels/create', 'FrontendController@showCreateChannel')->name('channels.create');
+Route::get('/channels/{name}', 'FrontendController@showChannel')->name('channels.show');
 
 Route::get('/handleauth', 'Auth\LoginController@handleAuth');
 
