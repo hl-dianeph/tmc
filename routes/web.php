@@ -26,16 +26,16 @@ Route::get('/channels/{name}', 'FrontendController@showChannel')->name('channels
 Route::get('/handleauth', 'Auth\LoginController@handleAuth');
 
 // Telegram
-Route::get('/telegram', 'TelegramController@test');
+Route::get('/login/telegram', 'Auth\LoginController@showTelegramLoginForm')->name('login.telegram');
+Route::post('/auth/telegram', 'Auth\LoginController@handleTelegramLogin')->name('auth.telegram');
 
-Route::get('auth/telegram', 'Auth\LoginController@redirectToProvider')->name('auth.telegram');
-Route::get('auth/telegram/callback', 'Auth\LoginController@handleProviderCallback');
+// Route::get('auth/telegram/callback', 'Auth\LoginController@handleProviderCallback');
 
 // TODO: remove this in production
 Route::get('/logout', function(Request $request) {
 	Auth::logout();
 	$request->session()->invalidate();
-	return redirect('/login');
+	return redirect('/');
 });
 
 // Auth

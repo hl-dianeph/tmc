@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\StaticPage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FrontendController extends Controller
 {
@@ -25,7 +26,10 @@ class FrontendController extends Controller
      * Create channel - TODO: own controller? (I guess yes!)
      */
     public function showCreateChannel() {
-    	
+        // dd('sdf');
+    	if (!Auth::check()) {
+            return redirect(route('login.telegram')); 
+        }
     	return view('frontend.channels.create', compact('categories'));
     }
 

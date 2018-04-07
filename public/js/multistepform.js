@@ -4,14 +4,17 @@ const app = new Vue({
         return {
             step: 1,
             registration: {
-                is_auth: false,
-                name: null,
-                email: null,
-                street: null,
-                city: null,
-                state: null,
-                numtickets: 0,
-                shirtsize: 'XL'
+                is_auth: true,
+                channel_telegram: {
+                    name: null,
+                    members_count: 0,
+                    avatar: null,
+                },
+                channel_tmc: {
+                    avatar: null,
+                    description: null,
+                    email: null
+                }
             }
         }
     },
@@ -23,7 +26,7 @@ const app = new Vue({
             // validate for step 1
             if (this.step == 1) {
                 if (this.registration.name == null || this.registration.name == "") {
-                    alert('Please enter name');
+                    alert('Введите название канала');
                     return;
                 }
             }

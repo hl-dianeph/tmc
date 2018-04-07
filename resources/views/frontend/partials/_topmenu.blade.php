@@ -2,6 +2,19 @@
     <div class="navbar-inner">
         <div class="container clearfix">
             <ul class="nav navbar-nav navbar-right hidden-xs">
+                @if (Auth::check())
+                <li class="navbar-twitter">
+                    <!-- TODO: remove this sheety code -->
+                    <a href="#"><span> {{ App\User::find(Auth::id())->username }}</span>
+                    </a>
+                </li>
+                <li class="navbar-twitter">
+                    <!-- TODO: remove this sheety code -->
+                    <a href="/logout"><span> Выход</span>
+                    </a>
+                </li>
+                @endif
+
                 <li class="navbar-twitter">
                     <a href="#" target="_blank" data-track="Follow/Twitter" onclick="trackDlClick(this, event)"><i class="icon icon-twitter"></i><span> Мы ВКонтакте</span>
                     </a>

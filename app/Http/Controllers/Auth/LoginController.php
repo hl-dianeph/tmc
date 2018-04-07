@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
 
 class LoginController extends Controller
@@ -61,7 +64,7 @@ class LoginController extends Controller
      */
     public function redirectToProvider()
     {
-        return Socialite::driver('telegram')->redirect();
+        return Socialite::with('telegram')->redirect();
     }
 
     /**
@@ -75,6 +78,44 @@ class LoginController extends Controller
         dd($user);
 
         // $user->token;
+    }
+
+
+    public function showTelegramLoginForm() {
+        return view('auth.telegram');
+    }
+
+    public function handleTelegramLogin(Request $request) {
+        // TODO: if request is not full -> return 'error'
+        // return $request->all();
+
+        $user = User::where('telegram_id', $request->id)->first();
+
+        if (!$user) {
+            // register
+            // TODO: validate!
+            $name = '';
+            if ($request->has('lastname'))
+                $name = $request->lastname;
+
+            if ($request->has('firstname')) 
+                $name = ' ' . $request->firstname;
+
+            $newUser = User::create([
+                'name' => trim($request->lastname . ' ' . $request->firstname),
+                'telegram_id' => $request->id,
+                'username' => $request->username,
+                'email' => $request->username . '@tmchannel.ru',
+                'password' => Hash::make(uniqid())
+            ]);
+
+            Auth::login($newUser);
+        } else {
+            // login
+            Auth::login($user);
+        }
+
+        return 1;
     }
     
 }
