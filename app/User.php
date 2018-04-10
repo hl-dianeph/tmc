@@ -28,4 +28,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * Dropdown for select
+     * 
+     */
+    public static function dropdown() {
+        $users = self::orderBy('username')->pluck('username', 'id');
+
+        return [null => 'Выберите юзера'] + $users->toArray();
+    }
 }

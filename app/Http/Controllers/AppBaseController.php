@@ -18,8 +18,6 @@ use Response;
  */
 class AppBaseController extends Controller
 {
-	protected $perPage = 25;
-
     public function sendResponse($result, $message)
     {
         return Response::json(ResponseUtil::makeResponse($message, $result));

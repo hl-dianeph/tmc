@@ -16,7 +16,9 @@
     <meta name="apple-itunes-app" content="app-id=686449807">
     <meta name="telegram:channel" content="@telegram">
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
-    <link href="{{ secure_asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- <link href="{{ secure_asset('css/bootstrap.min.css') }}" rel="stylesheet"> -->
     <link href="{{ secure_asset('css/telegram.css') }}" rel="stylesheet" media="screen">
     <style>
     @yield('css_body')

@@ -109,6 +109,8 @@ class LoginController extends Controller
                 'password' => Hash::make(uniqid())
             ]);
 
+            $newUser->assignRole('user');
+
             Auth::login($newUser);
         } else {
             // login

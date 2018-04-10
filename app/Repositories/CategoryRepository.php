@@ -99,6 +99,6 @@ class CategoryRepository extends BaseRepository
         }
 
         // TODO: try-catch?
-        return $this->delete($category->id);
+        return $category->forceDelete();
     }
 }

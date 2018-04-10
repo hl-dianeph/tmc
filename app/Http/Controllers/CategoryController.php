@@ -16,8 +16,7 @@ class CategoryController extends AppBaseController
 {
     /** @var  CategoryRepository */
     private $categoryRepository;
-
-    protected $perPage = 3;
+    private $perPage = 3;
 
     public function __construct(CategoryRepository $categoryRepo)
     {

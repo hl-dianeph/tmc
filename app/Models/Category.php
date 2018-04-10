@@ -62,13 +62,17 @@ class Category extends Model
     public const IMAGE_PUBLIC_DIR = 'images/categories/';
 
 
+    public function scopeTopLevel($query) {
+        return $query->whereParentId(null);
+    }
+
     /**
-     * Dropdown for select
+     * Dropdown for select (TOP LEVEL)
      * 
      */
     public static function dropdown() {
-        return [
-            null => 'Верхний уровень'
-        ];
+        $categories = self::topLevel()->orderBy('name')->pluck('name', 'id');
+
+        return [null => 'Выберите категорию'] + $categories->toArray();
     }
 }

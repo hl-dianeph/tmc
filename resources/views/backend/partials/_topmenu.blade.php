@@ -8,7 +8,7 @@
                 </a>
             </li>
             <li class="{{ Request::is('backend/channels*') ? 'active' : '' }}">
-                <a href="javascript:void(0)">
+                <a href="{{ route('backend.channels.index') }}">
                     <i class="menu-icon zmdi zmdi-layers zmdi-hc-lg"></i>
                     <span class="menu-text">Каналы</span>
                     <!-- <span class="label label-warning menu-label">2</span> -->
@@ -39,11 +39,15 @@
                     <!-- <i class="menu-caret zmdi zmdi-hc-sm zmdi-chevron-right"></i> -->
                 </a>
             </li>
-            <li class="{{ Request::is('backend/moderation*') ? 'active' : '' }}">
-                <a href="javascript:void(0)">
+            <li class="{{ Request::is('backend/moderation/*') ? 'active' : '' }}">
+                <a href="{{ route('backend.channels.moderation.index') }}">
                     <i class="menu-icon zmdi zmdi-flash zmdi-hc-lg"></i>
-                    <span class="menu-text">Модерация</span>
-
+                    <span class="menu-text">
+                        Модерация
+                        @if (App\Models\Channel::hasUnderModeration())
+                        (+{{ App\Models\Channel::underModerationCount() }})
+                        @endif
+                    </span>
                 </a>
             </li>
             <li class="hidden-lg hidden-md hidden-sm {{ Request::is('backend/settings*') ? 'active' : '' }}">

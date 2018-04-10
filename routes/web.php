@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 Route::get('/', 'FrontendController@index')->name('home');
 Route::get('/static/{slug}', 'FrontendController@showStaticPage')->name('static');
 
+
 Route::get('/categories', 'FrontendController@showCategories')->name('categories.index');
 Route::get('/categories/{slug}', 'FrontendController@showCategory')->name('categories.show');
 
@@ -30,6 +31,21 @@ Route::get('/login/telegram', 'Auth\LoginController@showTelegramLoginForm')->nam
 Route::post('/auth/telegram', 'Auth\LoginController@handleTelegramLogin')->name('auth.telegram');
 
 // Route::get('auth/telegram/callback', 'Auth\LoginController@handleProviderCallback');
+
+
+
+// AJAX
+Route::group(['prefix' => 'ajax'], function() {
+	Route::get('/get-channel', 'ChannelController@ajaxGetChannel');
+	Route::post('/post-addchannel-step1', 'ChannelController@ajaxPostAddChannelStep1');
+	Route::post('/post-addchannel-step2', 'ChannelController@ajaxPostAddChannelStep2');
+	Route::post('/post-addchannel-step3', 'ChannelController@ajaxPostAddChannelStep3');
+	Route::post('/post-checkchannel-subscription', 'ChannelController@ajaxPostCheckChannelSubscription');
+	Route::post('/post-uploadavatar', 'ChannelController@ajaxPostUploadAvatar');
+	Route::post('/post-createchannel', 'ChannelController@ajaxPostCreateChannel');
+});
+
+
 
 // TODO: remove this in production
 Route::get('/logout', function(Request $request) {
@@ -67,6 +83,17 @@ Route::prefix('backend')->as('backend.')->middleware(['auth', 'role:administrato
 	// resources
 	Route::resource('categories', 'CategoryController');
 	Route::resource('staticPages', 'StaticPageController');
+	Route::resource('types', 'TypeController');
+
+
+	Route::get('/moderation/channels', 'ChannelModerationController@index')->name('channels.moderation.index');
+	Route::get('/moderation/channels/{id}/edit', 'ChannelModerationController@edit')->name('channels.moderation.edit');
+	Route::put('moderation/channels/{id}', 'ChannelModerationController@moderate')->name('channels.moderation.moderate');
+	Route::patch('moderation/channels/{id}', 'ChannelModerationController@moderate')->name('channels.moderation.moderate');
+	Route::delete('/moderation/channels/{id}', 'ChannelModerationController@destroy')->name('channels.moderation.destroy');
+
+	Route::resource('channels', 'ChannelController');
+
 });
 
 // Route::get('backend/categories', ['as'=> 'backend.categories.index', 'uses' => 'CategoryController@index']);
@@ -77,4 +104,3 @@ Route::prefix('backend')->as('backend.')->middleware(['auth', 'role:administrato
 // Route::delete('backend/categories/{categories}', ['as'=> 'backend.categories.destroy', 'uses' => 'CategoryController@destroy']);
 // Route::get('backend/categories/{categories}', ['as'=> 'backend.categories.show', 'uses' => 'CategoryController@show']);
 // Route::get('backend/categories/{categories}/edit', ['as'=> 'backend.categories.edit', 'uses' => 'CategoryController@edit']);
-

@@ -24,16 +24,16 @@
                 <li class="{{ Request::is('/*') ? 'active' : '' }}">
                     <a href="{{ route('home') }}">Главная</a>
                 </li>
-                <li class="hidden-xs {{ Request::is('categories*') ? 'active' : '' }}">
+                <li class="{{ Request::is('categories*') ? 'active' : '' }}">
                     <a href="{{ route('categories.index') }}">Категории</a>
                 </li>
-                <li class="hidden-xs {{ Request::is('channels*') ? 'active' : '' }}">
+                <li class="{{ Request::is('channels*') ? 'active' : '' }}">
                     <a href="{{ route('channels.create') }}">Добавить канал</a>
                 </li>
                 <li class="{{ Request::is('pravila*') ? 'active' : '' }}">
                     <a href="{{ route('static', ['slug' => 'pravila']) }}">Правила</a>
                 </li>
-                <li class="hidden-xs {{ Request::is('o-nas*') ? 'active' : '' }}">
+                <li class="{{ Request::is('o-nas*') ? 'active' : '' }}">
                     <a href="{{ route('static', ['slug' => 'o-nas']) }}">О нас</a>
                 </li>
             </ul>
