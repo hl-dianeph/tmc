@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Category;
+use App\Models\Type;
 use App\User;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -36,7 +38,7 @@ class Channel extends Model
     public $table = 'channels';
     
 
-    protected $dates = ['deleted_at'];
+    protected $dates = ['published_at', 'deleted_at'];
 
 
     public $fillable = [
@@ -137,5 +139,15 @@ class Channel extends Model
     // author
     public function author() {
         return $this->belongsTo(User::class, 'author_id');
+    }
+
+    // category
+    public function category() {
+        return $this->belongsTo(Category::class);
+    }
+
+    // type
+    public function type() {
+        return $this->belongsTo(Type::class);
     }
 }

@@ -16,7 +16,7 @@ class FrontendController extends AppBaseController
     /** @var  ChannelRepository */
     private $channelRepository;
     private $categoryRepository;
-    private $perPage = 3;
+    private $perPage = 2;
     private $top = 9;
 
     public function __construct(ChannelRepository $channelRepo, CategoryRepository $categoryRepo)
@@ -46,10 +46,76 @@ class FrontendController extends AppBaseController
      */
     public function showCategories(Request $request) {
     	$this->categoryRepository->pushCriteria(new RequestCriteria($request));
-        $categories = $this->categoryRepository->getForIndex($this->perPage);
+        $categories = $this->categoryRepository->getAll();
 
-    	// dd($categories->toArray());
     	return view('frontend.categories.index', compact('categories'));
+    }
+
+    /**
+     * Category
+     */
+    public function showCategory(Request $request, $slug) {
+        $category = $this->categoryRepository->getBySlug($slug);
+        // dd($category->toArray());
+
+        if (empty($category)) {
+            return redirect(route('categories.index'));
+        }
+
+        $this->channelRepository->pushCriteria(new RequestCriteria($request));
+        $channels = $this->channelRepository->getByCategory($category->id, $this->perPage);
+
+        $prevLink = $channels->previousPageUrl();
+        $nextLink = $channels->nextPageUrl();
+
+        return view('frontend.categories.show', compact('category', 'channels', 'prevLink', 'nextLink'));
+    }
+
+    /**
+     * Channel
+     */
+    public function showChannel(Request $request, $name) {
+        $channel = $this->channelRepository->getByName($name);
+
+        if (empty($channel)) {
+            return redirect(route('channels.index'));
+        }
+
+        // hit++
+        $channel->hits += 1;
+        $channel->save();
+
+        // api call -> members count
+        $membersCount = $channel->members_count;
+
+        $client = new \GuzzleHttp\Client();
+        
+        // TODO: make const urls
+        $baseUrl = 'https://api.telegram.org/bot' . env('TELEGRAM_BOT_TOKEN');
+        $urlGetChatMembersCount = $baseUrl . '/getChatMembersCount';
+
+        try {
+            $responseGetChatMembersCount = $client->request('GET', $urlGetChatMembersCount, [
+                'query' => ['chat_id' => $channel->name]
+            ]);
+
+            $dataGetChatMembersCount = json_decode($responseGetChatMembersCount->getBody()->getContents());
+            $membersCount = $dataGetChatMembersCount->result;
+        } catch (\Exception $e) {
+            // ...
+        }
+
+        return view('frontend.channels.show', compact('channel', 'membersCount'));
+    }
+
+    /**
+     * Search
+     */
+    public function search(Request $request) {
+        $search = $request->q;
+        $channels = $this->channelRepository->search($search);
+
+        return view('frontend.categories.search', compact('channels', 'search'));
     }
 
     /**

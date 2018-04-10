@@ -133,7 +133,9 @@ class ChannelController extends AppBaseController
             return redirect(route('backend.channels.index'));
         }
 
-        $channel = $this->channelRepository->update($request->all(), $id);
+        // dd($request->validated());
+
+        $channel = $this->channelRepository->update($request->validated(), $id);
 
         Flash::success('Channel updated successfully.');
 
@@ -249,7 +251,11 @@ class ChannelController extends AppBaseController
 
         try {
             $request->avatar->move(public_path(Channel::IMAGE_PUBLIC_TMP_DIR), $imageName);
-            return ['status' => 'ok', 'path' => asset(Channel::IMAGE_PUBLIC_TMP_DIR . $imageName)];
+            return [
+                'status' => 'ok', 
+                'path' => asset(Channel::IMAGE_PUBLIC_TMP_DIR . $imageName),
+                'local_path' => $imageName
+            ];
 
         } catch (\Exception $e) {
             return ['status' => 'error', 'message' => $e->getMessage()];
@@ -333,7 +339,7 @@ class ChannelController extends AppBaseController
     // ajax /post create channel
     public function ajaxPostCreateChannel(AddChannelStep5Request $request) {
         try {
-            $channel = $this->channelRepository->addChannel($request->validated(), Type::TYPE_CHANNEL, Auth::user());
+            $channel = $this->channelRepository->addChannel($request->all(), Type::TYPE_CHANNEL, Auth::user());
 
             return ['status' => 'ok'];
         } catch (\Exception $e) {

@@ -2,8 +2,10 @@
 
 namespace App\Repositories;
 
+use App\Models\Category;
 use App\Models\Channel;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use InfyOm\Generator\Common\BaseRepository;
 use Intervention\Image\Facades\Image;
 
@@ -67,7 +69,7 @@ class ChannelRepository extends BaseRepository
         $data['author_id'] = $author->id;
 
         // save image, 80% quality is OK
-        $avatar = Image::make($data['avatar']);
+        $avatar = ($data['avatar_local']) ? Image::make(public_path(Channel::IMAGE_PUBLIC_TMP_DIR . $data['avatar_local'])) : Image::make($data['avatar']);
         $imageName = Channel::IMAGE_PUBLIC_DIR . $data['telegram_id'] . '.jpg';
         $avatar->save(public_path($imageName, 80));
         $data['avatar'] = $imageName;
@@ -81,6 +83,50 @@ class ChannelRepository extends BaseRepository
             $perPage,
             ['id', 'title', 'name', 'description', 'avatar']
         );
+    }
+
+    // get by category
+    public function getByCategory($categoryId, $perPage) {
+        return $this->makeModel()->published()->where('category_id', $categoryId)->orderBy('id', 'DESC')->paginate(
+            $perPage,
+            ['id', 'title', 'name', 'description', 'avatar', 'members_count']
+        );
+    }
+
+    // get by name
+    public function getByName($name) {
+        return $this->makeModel()->where('name', $name)->first();
+    }
+
+    // search
+    public function search($q) {
+        $result = collect();
+
+        // name, title, description
+        $channels = $this->makeModel()
+            ->where('status', 'published')
+            ->where('name', 'like', '%' . $q . '%')
+            ->orWhere('title', 'like', '%' . $q . '%')
+            ->orWhere('description', 'like', '%' . $q . '%')
+            ->orderBy('members_count', 'DESC')
+            ->get(['id', 'avatar', 'name', 'title', 'description', 'category_id']);
+
+        foreach ($channels as $channel) {
+            $result[$channel->id] = $channel;
+        }
+
+        // categories
+        $categories = Category::with('channels')
+            ->where('name', 'like', '%' . $q . '%')
+            ->get(['id', 'name']);
+
+        foreach ($categories as $category) {
+            foreach ($category->channels as $channel) {
+                $result[$channel->id] = $channel;
+            }
+        }
+
+        return $channels; 
     }
 
     // get under moderation

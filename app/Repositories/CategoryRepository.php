@@ -38,13 +38,27 @@ class CategoryRepository extends BaseRepository
         return Category::class;
     }
 
-    // get /index
+    // get backend /index
     public function getForIndex($perPage) {
         return $this->orderBy('id', 'DESC')->paginate(
             $perPage,
             ['id', 'name', 'slug', 'short_desc', 'full_desc', 'image']
         );
     }
+
+    // get frontend /categories
+    public function getAll() {
+        return $this->orderBy('id', 'DESC')->get(
+            ['id', 'name', 'slug', 'short_desc', 'image']
+        );
+    }
+
+    // get by slug
+    public function getBySlug($slug) {
+        return $this->makeModel()->where('slug', $slug)->first();
+    }
+
+    
 
     // create new
     public function storeNew($input) {

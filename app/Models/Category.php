@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Channel;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -74,5 +75,10 @@ class Category extends Model
         $categories = self::topLevel()->orderBy('name')->pluck('name', 'id');
 
         return [null => 'Выберите категорию'] + $categories->toArray();
+    }
+
+    // has many channels
+    public function channels() {
+        return $this->hasMany(Channel::class);
     }
 }

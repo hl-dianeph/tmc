@@ -167,11 +167,6 @@
             </div>
         </div>
     </div>
-
-<br/>
-<br/>Debug: @{{step}}
-<br/>Debug: @{{channel_telegram}}
-<br/>Debug: @{{channel_tmc}}
 </div>
 @endsection
 

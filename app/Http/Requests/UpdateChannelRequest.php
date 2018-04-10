@@ -25,6 +25,21 @@ class UpdateChannelRequest extends FormRequest
      */
     public function rules()
     {
-        return Channel::$rules;
+        // get current id
+        $id = $this->channel;
+
+        return [
+            // 'name' => 'required|unique:channels,name,' . $id . '|between:2,255',
+            'description' => 'required',
+            'category_id' => 'required',
+            'type_id' => 'required',
+            // 'members_count' => 'required',
+            'keywords' => 'required',
+            'og_description' => 'required',
+            'tags' => 'required',
+            // 'telegram_id' => 'required',
+            // 'avatar' => 'sometimes|file|mimes:jpg,png,jpeg|max:1024|dimensions:ratio=1/1,min_width:640,min_height:640',
+            // 'author_id' => 'required'
+        ];
     }
 }

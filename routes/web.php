@@ -24,6 +24,9 @@ Route::get('/categories/{slug}', 'FrontendController@showCategory')->name('categ
 Route::get('/channels/create', 'FrontendController@showCreateChannel')->name('channels.create');
 Route::get('/channels/{name}', 'FrontendController@showChannel')->name('channels.show');
 
+Route::get('/search', 'FrontendController@search')->name('search');
+
+
 Route::get('/handleauth', 'Auth\LoginController@handleAuth');
 
 // Telegram

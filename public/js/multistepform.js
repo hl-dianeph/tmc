@@ -26,6 +26,7 @@ const app = new Vue({
             },
             channel_tmc: {
                 avatar: null,
+                avatar_local: null,
                 category_id: '',
                 description: null,
                 // email: null
@@ -157,6 +158,7 @@ const app = new Vue({
                         title: $this.channel_telegram.title,
                         name: $this.channel_telegram.name,
                         avatar: $this.channel_tmc.avatar,
+                        avatar_local: $this.channel_tmc.avatar_local,
                         description: $this.channel_tmc.description,
                         telegram_type: $this.channel_telegram.type,
                         members_count: $this.channel_telegram.members_count,
@@ -183,7 +185,7 @@ const app = new Vue({
                     console.log($this.step);
                 });
             } else if ($this.step == 5) {
-                location.href = '/mychannels';
+                location.href = '/';
             }
         },
 
@@ -222,6 +224,7 @@ const app = new Vue({
 
                         if (response.status == 'ok') {
                             $this.channel_tmc.avatar = response.path;
+                            $this.channel_tmc.avatar_local = response.local_path;
                         }
 
                         // hide loader
