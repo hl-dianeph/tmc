@@ -170,11 +170,11 @@ class ChannelRepository extends BaseRepository
         $tags = explode(',', $data['tags']);
 
         // tags
-        $channel->syncTags([]);
+        // $channel->syncTags([]);
         
-        foreach ($tags as $key => $tag) {
-            $channel->attachTag(trim($tag));
-        }
+        // foreach ($tags as $key => $tag) {
+        //     $channel->attachTag(trim($tag));
+        // }
 
         // other
         $channel->keywords = trim($data['keywords']);
