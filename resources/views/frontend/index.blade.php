@@ -1,6 +1,9 @@
 @extends('frontend.layouts.master')
 
 
+@section('og_title')Tmchannel.ru - каталог телеграм каналов@endsection
+
+
 @section('content')
 
 <div class="tl_main_head">

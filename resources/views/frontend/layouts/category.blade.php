@@ -9,6 +9,7 @@
     <meta name="keywords" content="@yield('keywords', App\Models\Setting::val('keywords'))">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta property="og:title" content="@yield('og_title')">
+    <meta property="og:image" content="@yield('og_image')">
     <meta property="og:site_name" content="@yield('og_sitename')">
     <meta property="og:description" content="@yield('og_description', App\Models\Setting::val('og_description'))">
     

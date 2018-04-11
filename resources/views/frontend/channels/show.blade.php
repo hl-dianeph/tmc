@@ -1,4 +1,4 @@
-@extends('frontend.layouts.master') 
+@extends('frontend.layouts.category') 
 
 
 @section('title')Телеграм канал: {{ $channel->title }}@endsection

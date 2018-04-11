@@ -1,4 +1,4 @@
-@extends('frontend.layouts.master') 
+@extends('frontend.layouts.category') 
 
 
 @section('title')Категории телеграм каналов@endsection
