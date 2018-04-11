@@ -174,7 +174,7 @@
 
 @section('scripts_import')
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="{{ secure_asset('js/multistepform.js') }}"></script>
+<script src="{{ asset('js/multistepform.js') }}"></script>
 
 
 @endsection
