@@ -95,11 +95,11 @@ class ChannelRepository extends BaseRepository
 
         // tags
         $tags = explode(',', $input['tags']);
-        $old->syncTags([]);
+        // $old->syncTags([]);
         
-        foreach ($tags as $key => $tag) {
-            $old->attachTag(trim($tag));
-        }
+        // foreach ($tags as $key => $tag) {
+        //     $old->attachTag(trim($tag));
+        // }
 
         // TODO: try-catch?
         return $this->update($input, $old->id);
