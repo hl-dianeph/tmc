@@ -57,4 +57,9 @@ class Setting extends Model
     public const LOGO_NAME = "logo.png";
     public const FAVICON_NAME = "favicon.ico";
     public const IMAGE_PUBLIC_DIR = "images/";
+
+    public static function val($name)
+    {
+        return self::whereName($name)->first()->value;
+    }
 }

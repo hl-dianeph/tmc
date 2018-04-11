@@ -67,7 +67,7 @@ class ChannelController extends AppBaseController
 
         $channel = $this->channelRepository->create($input);
 
-        Flash::success('Channel saved successfully.');
+        Flash::success('Канал успешно сохранен.');
 
         return redirect(route('backend.channels.index'));
     }
@@ -84,7 +84,7 @@ class ChannelController extends AppBaseController
         $channel = $this->channelRepository->findWithoutFail($id);
 
         if (empty($channel)) {
-            Flash::error('Channel not found');
+            Flash::error('Канал не найден');
 
             return redirect(route('backend.channels.index'));
         }
@@ -104,7 +104,7 @@ class ChannelController extends AppBaseController
         $channel = $this->channelRepository->findWithoutFail($id);
 
         if (empty($channel)) {
-            Flash::error('Channel not found');
+            Flash::error('Канал не найден');
 
             return redirect(route('backend.channels.index'));
         }
@@ -125,19 +125,21 @@ class ChannelController extends AppBaseController
      */
     public function update($id, UpdateChannelRequest $request)
     {
+        // dd($request->validated());
+
         $channel = $this->channelRepository->findWithoutFail($id);
 
         if (empty($channel)) {
-            Flash::error('Channel not found');
+            Flash::error('Канал не найден');
 
             return redirect(route('backend.channels.index'));
         }
 
         // dd($request->validated());
 
-        $channel = $this->channelRepository->update($request->validated(), $id);
+        $channel = $this->channelRepository->updateOld($request->validated(), $channel);
 
-        Flash::success('Channel updated successfully.');
+        Flash::success('Канал успешно обновлен.');
 
         return redirect(route('backend.channels.index'));
     }
@@ -154,14 +156,14 @@ class ChannelController extends AppBaseController
         $channel = $this->channelRepository->findWithoutFail($id);
 
         if (empty($channel)) {
-            Flash::error('Channel not found');
+            Flash::error('Канал не найден');
 
             return redirect(route('backend.channels.index'));
         }
 
         $this->channelRepository->destroy($channel);
 
-        Flash::success('Channel deleted successfully.');
+        Flash::success('Канал успешно удален.');
 
         return redirect(route('backend.channels.index'));
     }
@@ -233,7 +235,7 @@ class ChannelController extends AppBaseController
     // ajax /upload avatar
     public function ajaxPostUploadAvatar(Request $request) {
         if (!$request->hasFile('avatar')) {
-            return ['status' => 'error', 'message' => 'please choose image'];
+            return ['status' => 'error', 'message' => 'Пожалуйста выберите изображение'];
         }
 
         // TODO: validate

@@ -14,7 +14,7 @@
             
             <div class="widget-body text-center">
                 <div class="row">
-                    {!! Form::model($channel, ['route' => ['backend.channels.update', $channel->id], 'method' => 'patch']) !!}
+                    {!! Form::model($channel, ['route' => ['backend.channels.update', $channel->id], 'method' => 'patch', 'files' => true]) !!}
 
                         @include('backend.channels.fields')
 

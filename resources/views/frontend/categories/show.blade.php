@@ -1,6 +1,11 @@
 @extends('frontend.layouts.master') 
 
 
+@section('title'){{ $category->name }} - каталог телеграм каналов@endsection
+@section('keywords'){{ $category->keywords }}@endsection
+@section('og_description'){{ $category->og_description }}@endsection
+
+
 @section('content')
 <div class="dev_page">
     <div id="dev_page_content_wrap" class=" ">

@@ -37,8 +37,8 @@ class UpdateChannelRequest extends FormRequest
             'keywords' => 'required',
             'og_description' => 'required',
             'tags' => 'required',
-            // 'telegram_id' => 'required',
-            // 'avatar' => 'sometimes|file|mimes:jpg,png,jpeg|max:1024|dimensions:ratio=1/1,min_width:640,min_height:640',
+            'telegram_id' => 'required',
+            'avatar' => 'sometimes|file|mimes:jpg,png,jpeg|max:1024|dimensions:ratio=1/1,min_width:640,min_height:640',
             // 'author_id' => 'required'
         ];
     }

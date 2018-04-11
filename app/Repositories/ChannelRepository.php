@@ -77,6 +77,34 @@ class ChannelRepository extends BaseRepository
         return $this->create($data);
     }
 
+    // update old
+    public function updateOld($input, $old) {
+        // avatar
+        if (isset($input['avatar'])) {
+            $imageName = $input['telegram_id'] . '.' . $input['avatar']->getClientOriginalExtension();
+
+            // TODO: DRY!
+            try {
+                // upload new
+                $input['avatar']->move(public_path(Channel::IMAGE_PUBLIC_DIR), $imageName);
+                $input['avatar'] = Channel::IMAGE_PUBLIC_DIR . $imageName;
+            } catch (\Exception $e) {
+                // ...
+            }
+        }
+
+        // tags
+        $tags = explode(',', $input['tags']);
+        $old->syncTags([]);
+        
+        foreach ($tags as $key => $tag) {
+            $old->attachTag(trim($tag));
+        }
+
+        // TODO: try-catch?
+        return $this->update($input, $old->id);
+    }
+
     // get /index
     public function getForIndex($perPage) {
         return $this->makeModel()->published()->orderBy('id', 'DESC')->paginate(
@@ -170,5 +198,34 @@ class ChannelRepository extends BaseRepository
 
         // TODO: try-catch?
         return $channel->forceDelete();
+    }
+
+    // get stats
+    public function getStats() {
+        $today = \Carbon\Carbon::today();
+        $weekAgo = \Carbon\Carbon::today()->subWeek();
+        $monthAgo = \Carbon\Carbon::today()->subMonth();
+
+        $yesterday = \Carbon\Carbon::today()->subDay();
+        // dd($yesterday);
+
+        $countTotal = Channel::published()->count();
+        $countToday = Channel::published()->where('published_at', '>', $today)->count();
+        $countWeek = Channel::published()->where('published_at', '>', $weekAgo)->count();
+        $countMonth = Channel::published()->where('published_at', '>', $monthAgo)->count();
+
+        $countYesterday = Channel::published()->where('published_at', '>', $yesterday)->count();
+
+        $todayDiff = $countToday - $countYesterday;
+
+
+        return [
+            'total' => $countTotal,
+            'today' => $countToday,
+            'weekAgo' => $countWeek,
+            'countMonth' => $countMonth,
+
+            'todayDiff' => $todayDiff,
+        ];
     }
 }

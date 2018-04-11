@@ -8,18 +8,18 @@
 		<div class="widget">
 			<header class="widget-header">
 				<h4 class="widget-title pull-left">Количество каналов</h4>
-				<small class="pull-right text-muted">29-03-2018</small>
+				<small class="pull-right text-muted">{{ $today }}</small>
 			</header><!-- .widget-header -->
 			<hr class="widget-separator">
 			<div class="widget-body clearfix">
 				<div class="pull-left">
 					<h3 class="text-color m-t-xs m-b-md fw-600 fz-lg">
 						<i class="zmdi zmdi-layers"></i> 
-						<span data-plugin="counterUp">2094</span>
+						<span data-plugin="counterUp">{{ $stats['total'] }}</span>
 					</h3>
 					<div class="text-primary">
-						<i class="fa fa-long-arrow-up m-r-xs"></i>
-						<sapn>33% чем прошлый месяц</sapn>
+						<!-- <i class="fa fa-long-arrow-up m-r-xs"></i> -->
+						<span>&nbsp;</span>
 					</div>
 				</div>
 				<div class="pull-right">
@@ -32,18 +32,22 @@
 		<div class="widget">
 			<header class="widget-header">
 				<h4 class="widget-title pull-left">За сегодня</h4>
-				<small class="pull-right text-muted">29-03-2018</small>
+				<small class="pull-right text-muted">{{ $today }}</small>
 			</header><!-- .widget-header -->
 			<hr class="widget-separator">
 			<div class="widget-body clearfix">
 				<div class="pull-left">
 					<h3 class="text-color m-t-xs m-b-md fw-600 fz-lg">
 						<i class="zmdi zmdi-layers"></i> 
-						<span data-plugin="counterUp">126</span>
+						<span data-plugin="counterUp">{{ $stats['today'] }}</span>
 					</h3>
 					<div class="text-danger">
-						<i class="fa fa-long-arrow-down m-r-xs"></i>
-						<sapn>43% чем вчера</sapn>
+						@if ($stats['todayDiff'] > 0)
+							<i class="fa fa-long-arrow-up m-r-xs"></i>
+						@else
+							<i class="fa fa-long-arrow-down m-r-xs"></i>
+						@endif
+						<span>на {{ $stats['todayDiff'] }} чем вчера</span>
 					</div>
 				</div>
 				<div class="pull-right">
@@ -56,18 +60,18 @@
 		<div class="widget">
 			<header class="widget-header">
 				<h4 class="widget-title pull-left">За неделю</h4>
-				<small class="pull-right text-muted">29-03-2018</small>
+				<small class="pull-right text-muted">{{ $today }}</small>
 			</header><!-- .widget-header -->
 			<hr class="widget-separator">
 			<div class="widget-body clearfix">
 				<div class="pull-left">
 					<h3 class="text-color m-t-xs m-b-md fw-600 fz-lg">
 						<i class="zmdi zmdi-layers"></i> 
-						<span data-plugin="counterUp">436</span>
+						<span data-plugin="counterUp">{{ $stats['weekAgo'] }}</span>
 					</h3>
 					<div class="text-primary">
-						<i class="fa fa-long-arrow-up m-r-xs"></i>
-						<sapn>33% чем прошлую неделю</sapn>
+						<!-- <i class="fa fa-long-arrow-up m-r-xs"></i> -->
+						<span>&nbsp;</span>
 					</div>
 				</div>
 				<div class="pull-right">

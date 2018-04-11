@@ -65,7 +65,7 @@ class CategoryController extends AppBaseController
 
         $category = $this->categoryRepository->storeNew($input);
 
-        Flash::success('Category saved successfully.');
+        Flash::success('Категория успешно создана.');
 
         return redirect(route('backend.categories.index'));
     }
@@ -82,7 +82,7 @@ class CategoryController extends AppBaseController
         $category = $this->categoryRepository->findWithoutFail($id);
 
         if (empty($category)) {
-            Flash::error('Category not found');
+            Flash::error('Категория не найдена');
 
             return redirect(route('backend.categories.index'));
         }
@@ -103,7 +103,7 @@ class CategoryController extends AppBaseController
         $category = $this->categoryRepository->findWithoutFail($id);
 
         if (empty($category)) {
-            Flash::error('Category not found');
+            Flash::error('Категория не найдена');
 
             return redirect(route('backend.categories.index'));
         }
@@ -123,17 +123,19 @@ class CategoryController extends AppBaseController
      */
     public function update($id, UpdateCategoryRequest $request)
     {
+        // dd($request->validated());
+
         $category = $this->categoryRepository->findWithoutFail($id);
 
         if (empty($category)) {
-            Flash::error('Category not found');
+            Flash::error('Категория не найдена');
 
             return redirect(route('backend.categories.index'));
         }
 
         $category = $this->categoryRepository->updateOld($request->validated(), $category);
 
-        Flash::success('Category updated successfully.');
+        Flash::success('Категория успешно обновлена.');
 
         return redirect(route('backend.categories.index', ['page' => $request->page]));
     }
@@ -150,14 +152,14 @@ class CategoryController extends AppBaseController
         $category = $this->categoryRepository->findWithoutFail($id);
 
         if (empty($category)) {
-            Flash::error('Category not found');
+            Flash::error('Категория не найдена');
 
             return redirect(route('backend.categories.index'));
         }
 
         $this->categoryRepository->destroy($category);
 
-        Flash::success('Category deleted successfully.');
+        Flash::success('Категория успешно удалена.');
 
         return redirect(route('backend.categories.index'));
     }

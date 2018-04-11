@@ -1,6 +1,11 @@
 @extends('frontend.layouts.master') 
 
 
+@section('title')Телеграм канал: {{ $channel->title }}@endsection
+@section('keywords'){{ $channel->keywords }}@endsection
+@section('og_description'){{ $channel->og_description }}@endsection
+
+
 @section('content')
 <div class="dev_page">
     <div id="dev_page_content_wrap" class=" ">

@@ -6,15 +6,17 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>@yield('title', 'Tmchannel.ru - каталог telegram каналов')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="@yield('keywords', App\Models\Setting::val('keywords'))">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta property="og:title" content="Telegram – a new era of messaging">
-    <meta property="og:image" content="https://telegram.org/img/t_logo.png">
-    <meta property="og:site_name" content="Telegram">
-    <meta property="og:description" content="">
-    <meta property="fb:app_id" content="254098051407226">
-    <meta property="vk:app_id" content="3782569">
-    <meta name="apple-itunes-app" content="app-id=686449807">
-    <meta name="telegram:channel" content="@telegram">
+    <meta property="og:title" content="">
+    <meta property="og:image" content="">
+    <meta property="og:site_name" content="">
+    <meta property="og:description" content="@yield('og_description', App\Models\Setting::val('og_description'))">
+    <meta property="fb:app_id" content="">
+    <meta property="vk:app_id" content="">
+    <meta name="apple-itunes-app" content="app-id=">
+    <meta name="telegram:channel" content="@">
+
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
     
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">

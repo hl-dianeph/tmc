@@ -1,6 +1,9 @@
 @extends('frontend.layouts.master') 
 
 
+@section('title')Категории телеграм каналов@endsection
+
+
 @section('content')
 <div class="tl_main_body">
     <a name="why-switch-to-Telegram"></a>

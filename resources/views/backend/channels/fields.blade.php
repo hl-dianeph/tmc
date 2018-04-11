@@ -74,6 +74,7 @@
 
 <!-- Page -->
 {!! Form::hidden('page', $page) !!}
+{!! Form::hidden('telegram_id', $channel->telegram_id) !!}
 
 <!-- Submit Field -->
 <div class="form-group col-sm-12">
