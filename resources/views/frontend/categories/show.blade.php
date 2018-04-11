@@ -5,7 +5,7 @@
 <div class="dev_page">
     <div id="dev_page_content_wrap" class=" ">
         <div class="dev_page_bread_crumbs"></div>
-        <h1 id="dev_page_title" dir="auto">Категория: {{ $category->name }}</h1>
+        <h1 id="dev_page_title" dir="auto">{{ $category->name }} - каталог телеграм каналов</h1>
         <div id="dev_page_content" dir="auto">
             <p>{!! $category->full_description !!}</p>
             

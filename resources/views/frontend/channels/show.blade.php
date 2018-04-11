@@ -7,7 +7,7 @@
         
         <div class="dev_page_bread_crumbs"></div>
 
-        <h1 id="dev_page_title" dir="auto">{{ $channel->title }}</h1>
+        <h1 id="dev_page_title" dir="auto">Телеграм канал: {{ $channel->title }}</h1>
         <div id="dev_page_content" dir="auto">
 
             <!-- Хлебные крошки -->
