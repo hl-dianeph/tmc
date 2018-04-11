@@ -55,7 +55,7 @@ class StaticPageRepository extends BaseRepository
     // update old 
     public function updateOld($input, $old) {
         // slug
-        $input['slug'] = Str::slug($input['name']);
+        // $input['slug'] = Str::slug($input['name']);
 
         // TODO: try-catch?
         return $this->update($input, $old->id);

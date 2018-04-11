@@ -3,6 +3,9 @@
 
 @section('title'){{ $category->name }} - каталог телеграм каналов@endsection
 @section('keywords'){{ $category->keywords }}@endsection
+@section('og_title'){{ $category->name }}@endsection
+@section('og_image'){{ asset(App\Models\Category::IMAGE_PUBLIC_DIR . $category->image) }}@endsection
+@section('og_sitename')Tmchannel.ru - каталог телеграм каналов@endsection
 @section('og_description'){{ $category->og_description }}@endsection
 
 
@@ -28,7 +31,7 @@
 
                 <div>
                     <h3>
-                        <a class="anchor" name="bot-api" href="{{ route('channels.show', ['name' => $channel->name]) }}">
+                        <a class="anchor tmc-link" name="bot-api" href="{{ route('channels.show', ['name' => $channel->name]) }}">
                             {{ $channel->title }}
                         </a>
                     </h3>

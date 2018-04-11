@@ -3,6 +3,7 @@
 
 @section('title'){{ $page->name }}@endsection
 @section('keywords'){{ $page->keywords }}@endsection
+@section('og_title'){{ $page->name }}@endsection
 @section('og_description'){{ $page->og_description }}@endsection
 
 

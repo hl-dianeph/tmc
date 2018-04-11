@@ -24,12 +24,16 @@
             <div class="tl_main_card_wrap" style="text-align: center;">
                 <div class="tl_main_card tl_main_card_private" style="width: auto">
                     <div class="img-responsive">
-                        <a href="{{ route('categories.show', ['name' => $category->slug]) }}">
+                        <a href="{{ route('categories.show', ['name' => $category->slug]) }}" class="tmc-link">
                             <img src="{{ asset(App\Models\Category::IMAGE_PUBLIC_DIR . $category->image) }}" class="img-circle" alt="{{ $category->name }}" style="width: 200px;">
                         </a>
                     </div>
                 </div>
-                <h3 class="tl_main_card_header">{{ $category->name }}</h3>
+                <h3 class="tl_main_card_header">
+                    <a href="{{ route('categories.show', ['name' => $category->slug]) }}" class="tmc-link">
+                        {{ $category->name }}
+                    </a>
+                </h3>
                 <div class="tl_main_card_lead">
                     {{ $category->short_desc }}
                 </div>

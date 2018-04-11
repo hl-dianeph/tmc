@@ -2,8 +2,12 @@
 
 
 @section('title')Телеграм канал: {{ $channel->title }}@endsection
+@section('og_sitename')Tmchannel.ru - каталог телеграм каналов@endsection
 @section('keywords'){{ $channel->keywords }}@endsection
 @section('og_description'){{ $channel->og_description }}@endsection
+@section('og_title'){{ $channel->title }}@endsection
+@section('og_image'){{ asset($channel->avatar) }}@endsection
+@section('telegram_channel'){{ $channel->name }}@endsection
 
 
 @section('content')

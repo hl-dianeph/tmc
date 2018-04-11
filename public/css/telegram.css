@@ -3915,3 +3915,7 @@ i.tl_telegram_share_icon {
   height: 120px;
   margin: 0 auto;
 }
+
+.tmc-link:hover {
+  cursor: pointer;
+}
